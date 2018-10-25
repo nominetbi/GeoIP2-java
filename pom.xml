@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.maxmind.geoip2</groupId>
+    <groupId>uk.nominet</groupId>
     <artifactId>geoip2</artifactId>
-    <version>2.12.1-SNAPSHOT</version>
+    <version>2.12.1-jackson-2.6.5</version>
     <packaging>jar</packaging>
     <name>MaxMind GeoIP2 API</name>
-    <description>GeoIP2 webservice client and database reader</description>
-    <url>http://dev.maxmind.com/geoip/geoip2/web-services</url>
+    <description>GeoIP2 webservice client and database reader using jackson 2.6.5 for compatability with Spark 2.2.0</description>
+    
+    <organization>
+        <name>Nominet UK</name>
+        <url>http://nominet.uk</url>
+    </organization>
+    
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -15,17 +20,14 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-    <organization>
-        <name>MaxMind, Inc.</name>
-        <url>http://www.maxmind.com/</url>
-    </organization>
+    
     <scm>
-        <url>https://github.com/maxmind/GeoIP2-java</url>
-        <connection>scm:git:git://github.com:maxmind/GeoIP2-java.git</connection>
-        <developerConnection>scm:git:git@github.com:maxmind/GeoIP2-java.git</developerConnection>
+        <url>https://github.com/nominetbi/GeoIP2-java</url>
+        <connection>scm:git:git://github.com:nominetbi/GeoIP2-java.git</connection>
+        <developerConnection>scm:git:git@github.com:nominetbi/GeoIP2-java.git</developerConnection>
     </scm>
     <issueManagement>
-        <url>https://github.com/maxmind/GeoIP2-java/issues</url>
+        <url>https://github.com/nominetbi/GeoIP2-java/issues</url>
         <system>GitHub</system>
     </issueManagement>
     <developers>
@@ -34,32 +36,40 @@
             <name>Gregory J. Oschwald</name>
             <email>goschwald@maxmind.com</email>
         </developer>
+        <developer>
+            <name>Ben Taylor</name>
+            <email>ben.taylor@nominet.uk</email>
+        </developer>
     </developers>
     <dependencies>
         <dependency>
-            <groupId>com.maxmind.db</groupId>
+            <groupId>uk.nominet</groupId>
             <artifactId>maxmind-db</artifactId>
-            <version>1.2.2</version>
+            <version>1.2.3-jackson-2.6.5</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.5.5</version>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.9.7</version>
+            <version>2.6.5</version>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.9.7</version>
+            <version>2.6.5</version>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.9.7</version>
+            <version>2.6.5</version>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -110,25 +120,6 @@
     <build>
         <plugins>
             <plugin>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.0-M1</version>
-                <executions>
-                    <execution>
-                        <id>javadoc-jar</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                        <configuration>
-                            <links>
-                                <link>
-                                http://maxmind.github.io/MaxMind-DB-Reader-java/doc/latest/</link>
-                            </links>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
@@ -145,7 +136,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <version>1.5</version>
@@ -158,7 +149,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -166,14 +157,6 @@
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.eluder.coveralls</groupId>
-                <artifactId>coveralls-maven-plugin</artifactId>
-                <version>4.3.0</version>
-                <configuration>
-                    <serviceName>travis-ci</serviceName>
                 </configuration>
             </plugin>
             <plugin>
@@ -238,9 +221,4 @@
             </plugin>
         </plugins>
     </build>
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>7</version>
-    </parent>
 </project>
